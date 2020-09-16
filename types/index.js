@@ -1,0 +1,24 @@
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_ERROR = 'AUTH_ERROR'
+
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
+export const SIGNUP_ERROR = 'SIGNUP_ERROR'
+
+export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
+export const SIGNIN_ERROR = 'SIGNIN_ERROR'
+
+export const SIGNOUT = 'SIGNOUT'
+
+export const LOADING = 'LOADING'
+
+export const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS'
+export const UPLOAD_FILE_ERROR = 'UPLOAD_FILE_ERROR'
+
+export const CREATE_LINK_SUCCESS = 'CREATE_LINK_SUCCESS'
+export const CREATE_LINK_ERROR = 'CREATE_LINK_ERROR'
+
+export const CLEAN_STATE = 'CLEAN_STATE'
+
+export const ADD_PASSWORD = 'ADD_PASSWORD'
+
+export const ADD_DOWNLOADS = 'ADD_DOWNLOADS'

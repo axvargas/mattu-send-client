@@ -1,65 +1,65 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, { useEffect, useContext } from 'react'
+import Layout from '../components/Layout'
+import AuthContext from '../context/auth/authContext'
+import AppContext from '../context/app/appContext'
+import Link from 'next/link'
+import Dropzone from '../components/Dropzone'
+const Home = () => {
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+	// * Get the auth user
+	const { authenticated, authUserFn } = useContext(AuthContext)
+	const { url } = useContext(AppContext)
+	useEffect(() => {
+		const token = localStorage.getItem('rms-token');
+		if (token) {
+			authUserFn()
+		}
+	}, [])
+	return (
+		<Layout>
+			<div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
+				{url ?
+					<>
+						<p className="text-center font-semibold text-2xl">
+							<span className="font-bold text-red-600 text-2xl uppercase">
+								Your URL is:{' '}
+							</span>
+							{`${process.env.frontendURL}/links/${url}`}
+						</p>
+						<button
+							type="button"
+							className="w-full bg-red-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded uppercase mt-2"
+							onClick={() => navigator.clipboard.writeText(`${process.env.frontendURL}/links/${url}`)}
+						>
+							Copy to clipboard
+                    	</button>
+					</>
+					:
+					<div className="lg:flex md:shadow-lg p-5 bg-white rounded-lg py-10">
+						<Dropzone />
+						<div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-0">
+							<h2 className="text-4xl font-sans font-semibold text-gray-800 my-4">
+								Share your files simply and privately
+							</h2>
+							<p className="text-lg leading-loose mb-4">
+								<span className="text-red-600 font-semibold">React Mattu Send{" "}</span>
+								allows you to share files with end-to-end encryption and the files are
+								deleted after they are downloaded. So you can keep what you share private
+								and make sure your files don't stay online forever.
+							</p>
+							{!authenticated &&
+								<Link href='/signup'>
+									<a className="text-red-600 font-semibold text-lg hover:text-red-800">
+										Create an account for free, to get premiun benefits
+									</a>
+								</Link>
+							}
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+						</div>
+					</div>
+				}
+			</div>
+		</Layout>
+	)
 }
+export default Home
