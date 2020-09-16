@@ -26,7 +26,11 @@ const Dropzone = () => {
     }, [])
 
     // * Get things from the hook
-    const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({ onDropAccepted, onDropRejected, maxSize: 1000000 })
+    const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
+        onDropAccepted,
+        onDropRejected,
+        maxSize: authenticated ? 1000000 * 16 : 1000000
+    })
 
     const files = acceptedFiles.map((file) => (
         <li key={file.lastModified} className="bg-white flex-1 p-3 mb-4 shadow-lg rounded">

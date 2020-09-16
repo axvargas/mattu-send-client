@@ -41,7 +41,7 @@ export const getServerSidePaths = async () => {
 
 const LinkPage = ({ link }) => {
     const { addToast } = useToasts()
-
+    const [fileToDownload, setFileToDownload] = useState(link.file)
     const [hasGotPassword, setHasGotPassword] = useState(link.password)
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
@@ -53,7 +53,9 @@ const LinkPage = ({ link }) => {
         }
         try {
             const response = await axiosClient.post(`/links/${link.link}`, data)
+            console.log(response.data);
             setHasGotPassword(response.data.password)
+            setFileToDownload(response.data.file)
             addToast(response.data.msg, { appearance: 'success' })
         } catch (error) {
             if (!error.response.data.field) {
@@ -113,7 +115,7 @@ const LinkPage = ({ link }) => {
                             </button>
                             </form>
                         </div>
-                /</div>
+                    </div>
                 </>
                 :
                 <>
@@ -121,7 +123,7 @@ const LinkPage = ({ link }) => {
                     <div className="flex items-center justify-center mt-10">
                         <a
                             className="bg-red-600 hover:bg-gray-700 text-center px-10 py-3 rounded uppercase font-semibold text-white cursor-pointer"
-                            href={`${process.env.backendURL}/api/files/${link.file}`}
+                            href={`${process.env.backendURL}/api/files/${fileToDownload}`}
                             download
                         >
                             Here
